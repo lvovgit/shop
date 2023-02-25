@@ -10,6 +10,7 @@ def test_item_init():
     item1.apply_discount()
     assert item1.price == 8000.0
 
+
 def test_instantiate_from_csv():
     Item.instantiate_from_csv('test.csv')
     assert len(Item.all) == 5
@@ -17,3 +18,8 @@ def test_instantiate_from_csv():
     assert Item.is_integer(5.0) is True
     assert Item.is_integer(5.5) is False
 
+
+def test_repr_str():
+    item1 = Item("Смартфон", 10000, 20)
+    assert repr(item1) == repr(Item("Смартфон", 10000, 20))
+    assert str(item1) == "Смартфон"

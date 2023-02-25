@@ -14,6 +14,12 @@ class Item:
         Item.all.append(self)
         Item.copy_amount += 1
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', '{self.price}', '{self.quantity}')"
+
+    def __str__(self):
+        return f'{self.name}'
+
     @classmethod
     def instantiate_from_csv(cls, path: str):
         with open(path, encoding='windows-1251') as csvfile:
@@ -74,12 +80,15 @@ class Item:
 
 # item.name = 'СуперСмартфон'
 
-#Item.instantiate_from_csv('items.csv')
+# Item.instantiate_from_csv('items.csv')
 # print(len(Item.all))
 
-#item1 = Item.all[0]
-#print(item1.name)
+# item1 = Item.all[0]
+# print(item1.name)
 
 # print(Item.is_integer(5))
 # print(Item.is_integer(5.0))
 # print(Item.is_integer(5.5))
+
+#item1 = Item("Смартфон", 10000, 20)
+#item1
