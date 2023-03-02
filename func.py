@@ -59,6 +59,36 @@ class Item:
         else:
             print('Exception: Длина товара превышает допустимую длину')
 
+class Phone(Item):
+    def __init__(self, name, price, quantity, sim):
+        super().__init__(name, price, quantity)
+        self.__sim = sim
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity}, {self.sim})"
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.price + other.price
+        else:
+            raise ValueError('Количество')
+
+    @property
+    def sim(self, sim=None):
+        if sim == None:
+            return self.__sim
+        else:
+            self.__sim = sim
+            return self.__sim
+
+    @sim.setter
+    def sim(self, sim: int):
+        if sim < 1:
+            raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля')
+        else:
+            self.__sim = sim
+
+
+
+
 
 # item1 = Item("Смартфон", 10000, 20)
 # item2 = Item("Ноутбук", 20000, 5)
@@ -92,3 +122,6 @@ class Item:
 
 #item1 = Item("Смартфон", 10000, 20)
 #item1
+
+phone1 = Phone("iPhone 14", 120_000, 5, 2)
+
