@@ -1,4 +1,4 @@
-from func import Item
+from func import Item, Phone
 
 
 def test_item_init():
@@ -23,3 +23,8 @@ def test_repr_str():
     item1 = Item("Смартфон", 10000, 20)
     assert repr(item1) == repr(Item("Смартфон", 10000, 20))
     assert str(item1) == "Смартфон"
+
+def test_cls_phone():
+    phone1 = Phone("iPhone 14", 120_000, 5, 2)
+    assert str(phone1) == 'iPhone 14'
+    assert repr(phone1) == "Phone('iPhone 14', 120000, 5, 2)"
