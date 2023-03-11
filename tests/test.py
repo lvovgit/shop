@@ -1,4 +1,4 @@
-from func import Item, Phone
+from func import Item, Phone, ClassMixin, KeyBoard
 
 
 def test_item_init():
@@ -28,3 +28,10 @@ def test_cls_phone():
     phone1 = Phone("iPhone 14", 120_000, 5, 2)
     assert str(phone1) == 'iPhone 14'
     assert repr(phone1) == "Phone('iPhone 14', 120000, 5, 2)"
+
+def test_cls_keyboard():
+    kb = KeyBoard('Dark Project KD87A', 9600, 5)
+    assert str(kb) == 'Dark Project KD87A'
+    assert str(kb.language) == 'EN'
+    kb.change_lang()
+    assert str(kb.language) == 'RU'

@@ -86,6 +86,34 @@ class Phone(Item):
         else:
             self.__sim = sim
 
+class ClassMixin:
+    def __init__(self, *args, **kwargs):
+        self.__language = 'EN'
+        super().__init__(*args, **kwargs)
+
+
+    def change_lang(self):
+        if self.__language == 'RU':
+            self.__language = 'EN'
+        else:
+            self.__language = 'RU'
+
+    @property
+    def language(self, language='EN'):
+        if language == 'EN':
+            return self.__language
+        else:
+            self.__language = language
+            return self.__language
+
+    @language.setter
+    def language(self, language:str):
+        if language != 'EN' or 'RU':
+            raise ValueError('Язык не поддерживается')
+        else:
+            self.__language = language
+class KeyBoard(ClassMixin, Item):
+    pass
 
 
 
@@ -123,5 +151,12 @@ class Phone(Item):
 #item1 = Item("Смартфон", 10000, 20)
 #item1
 
-phone1 = Phone("iPhone 14", 120_000, 5, 2)
+#phone1 = Phone("iPhone 14", 120_000, 5, 2)
 
+# kb = KeyBoard('Dark Project KD87A', 9600, 5)
+# print(kb)
+# print(kb.language)
+# kb.change_lang()
+# print(kb.language)
+# print(KeyBoard.mro())
+# kb.language = 'CH'
