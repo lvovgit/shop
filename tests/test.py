@@ -1,4 +1,4 @@
-from func import Item, Phone, ClassMixin, KeyBoard
+from shop.item import Item, Phone, KeyBoard
 
 
 def test_item_init():
