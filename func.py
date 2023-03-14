@@ -1,6 +1,11 @@
 import csv
+import os
 
-
+class InstantiateCSVError(KeyError):
+    def __init__(self, *args, **kwargs):
+        self.message = args[0] if args else 'Файл Items.csv поврежден'
+    def __str__(self):
+        return self.message
 class Item:
     pay_rate = 0
     copy_amount = 0
@@ -22,14 +27,22 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, path: str):
+
+        if not os.path.isfile("items.csv"):
+            raise FileNotFoundError("отсутствует файл")
+
         with open(path, encoding='windows-1251') as csvfile:
             reader = csv.DictReader(csvfile)
-            for row in reader:
-                cls(
-                    name=row['name'],
-                    price=float(row['price']),
-                    quantity=int(row['quantity'])
-                )
+            try:
+                for row in reader:
+                    if list(row.keys()) == ['name', 'price', 'quantity']:
+                        cls(name=row['name'], price=float(row['price']), quantity=int(row['quantity']))
+                    else:
+                        raise InstantiateCSVError
+
+            except KeyError:
+                InstantiateCSVError('Файл items.csv поврежден')
+
 
     @staticmethod
     def is_integer(number):
@@ -59,12 +72,18 @@ class Item:
         else:
             print('Exception: Длина товара превышает допустимую длину')
 
+
+
+
+
 class Phone(Item):
     def __init__(self, name, price, quantity, sim):
         super().__init__(name, price, quantity)
         self.__sim = sim
+
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity}, {self.sim})"
+
     def __add__(self, other):
         if isinstance(other, Item):
             return self.price + other.price
@@ -86,11 +105,11 @@ class Phone(Item):
         else:
             self.__sim = sim
 
+
 class ClassMixin:
     def __init__(self, *args, **kwargs):
         self.__language = 'EN'
         super().__init__(*args, **kwargs)
-
 
     def change_lang(self):
         if self.__language == 'RU':
@@ -107,15 +126,17 @@ class ClassMixin:
             return self.__language
 
     @language.setter
-    def language(self, language:str):
+    def language(self, language: str):
         if language != 'EN' or 'RU':
             raise ValueError('Язык не поддерживается')
         else:
             self.__language = language
+
+
 class KeyBoard(ClassMixin, Item):
-    pass
-
-
+    def __init__(self, name, price, quality) -> None:
+        super().__init__(name, price, quality)
+        ClassMixin.__init__(self)
 
 
 # item1 = Item("Смартфон", 10000, 20)
@@ -137,10 +158,8 @@ class KeyBoard(ClassMixin, Item):
 # print(item.name)
 
 # item.name = 'СуперСмартфон'
-
-# Item.instantiate_from_csv('items.csv')
+Item.instantiate_from_csv('items.csv')
 # print(len(Item.all))
-
 # item1 = Item.all[0]
 # print(item1.name)
 
@@ -148,10 +167,10 @@ class KeyBoard(ClassMixin, Item):
 # print(Item.is_integer(5.0))
 # print(Item.is_integer(5.5))
 
-#item1 = Item("Смартфон", 10000, 20)
-#item1
+# item1 = Item("Смартфон", 10000, 20)
+# item1
 
-#phone1 = Phone("iPhone 14", 120_000, 5, 2)
+# phone1 = Phone("iPhone 14", 120_000, 5, 2)
 
 # kb = KeyBoard('Dark Project KD87A', 9600, 5)
 # print(kb)
