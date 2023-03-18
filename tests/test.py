@@ -1,5 +1,7 @@
-from shop.item import Item, Phone, KeyBoard
-
+from shop.item import Item
+from shop.phone import Phone
+from shop.keyboard import KeyBoard
+from errors.errors import InstantiateCSVError
 
 def test_item_init():
     item1 = Item("Смартфон", 10000, 20)
@@ -35,3 +37,7 @@ def test_cls_keyboard():
     assert str(kb.language) == 'EN'
     kb.change_lang()
     assert str(kb.language) == 'RU'
+
+def test_instantiate_csv_error():
+    e = InstantiateCSVError()
+    assert (str(e)) == "Файл Items.csv поврежден"

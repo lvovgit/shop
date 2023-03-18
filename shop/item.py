@@ -90,7 +90,7 @@ class Item:
 # print(item.name)
 
 # item.name = 'СуперСмартфон'
-Item.instantiate_from_csv('../items.csv')
+#Item.instantiate_from_csv('../items.csv')
 # print(len(Item.all))
 # item1 = Item.all[0]
 # print(item1.name)
