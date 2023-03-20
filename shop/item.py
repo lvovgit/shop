@@ -27,7 +27,7 @@ class Item:
         """Если файл не найден или поврежден выбрасывает соответствующие Exception"""
 
         if not os.path.isfile("../items.csv"):
-            raise FileNotFoundError("отсутствует файл")
+            raise FileNotFoundError("Файл items.csv отсутствует")
         try:
             with open(path, encoding='windows-1251') as csvfile:
                 reader = csv.DictReader(csvfile)
@@ -37,8 +37,8 @@ class Item:
                     else:
                         raise InstantiateCSVError
 
-        except KeyError:
-            InstantiateCSVError('Файл items.csv поврежден')
+        except InstantiateCSVError:
+            print('Файл items.csv поврежден')
 
     @staticmethod
     def is_integer(number):

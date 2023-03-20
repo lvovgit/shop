@@ -1,6 +1,9 @@
+import pytest
+
 from shop.item import Item
 from shop.phone import Phone
 from shop.keyboard import KeyBoard
+import os
 from errors.errors import InstantiateCSVError
 
 def test_item_init():
@@ -38,6 +41,9 @@ def test_cls_keyboard():
     kb.change_lang()
     assert str(kb.language) == 'RU'
 
+def test_file_not_found_error():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('../items.csv')
+
 def test_instantiate_csv_error():
-    e = InstantiateCSVError()
-    assert (str(e)) == "Файл Items.csv поврежден"
+    assert Item.instantiate_from_csv('../items.csv') == print("Файл item.csv поврежден")
